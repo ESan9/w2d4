@@ -17,6 +17,8 @@ public class CloudinaryConfig {
                                        @Value("${cloudinary.secret}") String apiSecret) {
         // VERIFICATE SEMPRE CHE I VALUE VENGANO PRESI CORRETTAMENTE DA APPLICATION PROPERTIES!!
         // BASTA UN SYSTEM OUT
+        System.out.println(cloudName);
+        System.out.println(apiKey);
         Map<String, String> config = new HashMap<>();
         config.put("cloud_name", cloudName);
         config.put("api_key", apiKey);

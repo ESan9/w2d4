@@ -99,7 +99,7 @@ public class AuthorService {
     }
 
     public Author uploadAvatar(UUID authorId, MultipartFile file) {
-        // 1. Cerco l'autore (lancia NotFoundException se non esiste) - LOGICA CORRETTA
+        // 1. Cerco l'autore (lancia NotFoundException se non esiste)
         Author foundAuthor = this.findById(authorId);
 
         try {
@@ -118,7 +118,7 @@ public class AuthorService {
             return modifiedAuthor;
 
         } catch (IOException e) {
-            
+
             log.error("Errore durante l'upload dell'immagine per l'autore {}: {}", authorId, e.getMessage());
             throw new RuntimeException("Errore del servizio di storage durante l'upload dell'immagine.", e);
         }
