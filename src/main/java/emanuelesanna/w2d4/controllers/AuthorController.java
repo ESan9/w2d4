@@ -73,6 +73,7 @@ public class AuthorController {
         this.authorService.findByIdAndDelete(authorId);
     }
 
+    //    http://localhost:3001/authors/c281c574-756e-42b4-9632-ec2c1b604c93/avatar in body metti formdata e key value dell'immagine in locale
     // PATCH: Endpoint per l'upload dell'avatar (operazione parziale per aggiornare solo l'avatarURL)
     @PatchMapping("/{authorId}/avatar")
 //    Aggiunto @PathVariable UUID authorId per identificare l'autore da aggiornare.

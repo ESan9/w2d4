@@ -27,6 +27,9 @@ import java.util.UUID;
 @Slf4j
 public class AuthorService {
 
+    private static final long MAX_SIZE = 5 * 1024 * 1024; // 5 MB
+    private static final List<String> ALLOWED_TYPES = List.of("image/png", "image/jpeg");
+
     @Autowired
     private Cloudinary imageUploader;
 
@@ -99,6 +102,11 @@ public class AuthorService {
     }
 
     public Author uploadAvatar(UUID authorId, MultipartFile file) {
+
+        if (file.isEmpty()) throw new BadRequestException("File vuoto!");
+        if (file.getSize() > MAX_SIZE) throw new BadRequestException("La dimensione del file super quella massima");
+        if (!ALLOWED_TYPES.contains(file.getContentType()))
+            throw new BadRequestException("I formati permessi sono png e jpeg!");
         // 1. Cerco l'autore (lancia NotFoundException se non esiste)
         Author foundAuthor = this.findById(authorId);
 
@@ -120,7 +128,7 @@ public class AuthorService {
         } catch (IOException e) {
 
             log.error("Errore durante l'upload dell'immagine per l'autore {}: {}", authorId, e.getMessage());
-            throw new RuntimeException("Errore del servizio di storage durante l'upload dell'immagine.", e);
+            throw new BadRequestException("Errore del servizio di storage durante l'upload dell'immagine.");
         }
     }
 }
